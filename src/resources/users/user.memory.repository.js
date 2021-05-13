@@ -1,12 +1,12 @@
 const USERS = [
   {
-    "id": 1,
+    "id": "1",
     "name": "Andy",
     "login": "andy.a@test.com",
     "password": ""
   },
   {
-    "id": 2,
+    "id": "2",
     "name": "Andy2",
     "login": "andy2.a@test.com",
     "password": ""
