@@ -23,6 +23,10 @@ const updateUser = async (id, user) => {
     USERS[foundIndex] = user;
   }
 };
-const deleteUser = async (id) => USERS.filter(user => user.id !== id);
+const deleteUser = async (id) => USERS.filter((user, idx) => {
+  if (user.id === id) {
+    USERS.splice(idx, 1);
+  }
+});
 
 module.exports = { getAll, getById, addUser, updateUser, deleteUser };

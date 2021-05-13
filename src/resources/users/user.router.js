@@ -49,7 +49,7 @@ router.route('/:id').delete(async (req, res) => {
     const user = await usersService.getById(id);
     if (user) {
         await usersService.deleteUser(user.id);
-        return res.status(200).json(user);
+        return res.status(204).json(user);
     }
     return res.status(400).send('Not found');
 });
