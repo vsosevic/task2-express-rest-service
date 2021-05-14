@@ -1,12 +1,12 @@
 const router = require('express').Router();
+const uuid = require('uuid').v4;
 const User = require('./user.model');
 const usersService = require('./user.service');
-const uuid = require('uuid').v4;
 
 router.route('/').get(async (req, res) => {
     try {
         const users = await usersService.getAll();
-        res.json(users.map(User.toResponse));
+        return res.json(users.map(User.toResponse));
     } catch (err) {
         return res.status(404).send(err.message);
     }

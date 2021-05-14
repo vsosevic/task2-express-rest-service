@@ -1,7 +1,7 @@
 const router = require('express').Router();
+const uuid = require('uuid').v4;
 const Board = require('./board.model');
 const boardsService = require('./board.service');
-const uuid = require('uuid').v4;
 
 router.route('/').get(async (req, res) => {
     const boards = await boardsService.getAll();

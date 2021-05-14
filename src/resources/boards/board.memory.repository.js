@@ -6,14 +6,17 @@ const addBoard = async (board) => BOARDS.push(board);
 const updateBoard = async (id, board) => {
     const foundIndex = BOARDS.findIndex(x => x.id === id);
     if (foundIndex) {
-        board.id = id;
-        BOARDS[foundIndex] = board;
+        const boardTmp = board;
+        boardTmp.id = id;
+        BOARDS[foundIndex] = boardTmp;
     }
 };
 const deleteBoard = async (id) => BOARDS.filter((board, idx) => {
     if (board.id === id) {
         BOARDS.splice(idx, 1);
+        return true;
     }
+    return false;
 });
 
 module.exports = {getAll, getById, addBoard, updateBoard, deleteBoard};

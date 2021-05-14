@@ -6,11 +6,11 @@ const getById = (id) => boardsRepo.getById(id);
 const addBoard = (board) => boardsRepo.addBoard(board);
 const updateBoard = (id, board) => boardsRepo.updateBoard(id, board);
 const deleteBoard = async (id) => {
-    await tasksService.deleteTasksByBoardId(id);
+    // await tasksService.deleteTasksByBoardId(id);
      await boardsRepo.deleteBoard(id).then(() => {
-        // tasksService.deleteTasksByBoardId(id);
+        tasksService.deleteTasksByBoardId(id);
     }).catch(err => {
-        console.log('Smth went wrong with board deletion');
+        console.error('Smth went wrong with board deletion', err);
     });
 
 };

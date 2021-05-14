@@ -1,12 +1,12 @@
 const router = require('express').Router({mergeParams:true});
+const uuid = require('uuid').v4;
 const Task = require('./task.model');
 const tasksService = require('./task.service');
-const uuid = require('uuid').v4;
 
 router.route('/').get(async (req, res) => {
     try {
-        const {boardIdParams} = req.params;
-        const tasks = await tasksService.getAll(boardIdParams);
+        // const {boardIdParams} = req.params;
+        const tasks = await tasksService.getAll();
         // map task fields to exclude secret fields like "password"\
         if (tasks) {
             return res.json(tasks.map(Task.toResponse));

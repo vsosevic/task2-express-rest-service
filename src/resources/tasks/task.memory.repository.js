@@ -1,6 +1,6 @@
-let TASKS = [];
+const TASKS = [];
 
-const getAll = async (boardId) => TASKS;// .find(task => task.boardId === boardId);
+const getAll = async () => TASKS;// .find(task => task.boardId === boardId);
 // const getAll = async (boardId) => {
 //     if (boardId) {
 //         return TASKS.find(task => task.boardId === boardId)
@@ -12,12 +12,19 @@ const addTask = async (task) => TASKS.push(task);
 const updateTask = async (id, task) => {
     const foundIndex = TASKS.findIndex(x => x.id === id);
     if (foundIndex) {
-        task.id = id;
-        TASKS[foundIndex] = task;
+        const taskTmp = task;
+        taskTmp.id = id;
+        TASKS[foundIndex] = taskTmp;
     }
 };
+const unassignUser = async (userId) => TASKS.filter(task => {
+    if (task.userId === userId) {
+        task.userId = null;
+        return true;
+    }
+    return false;
+});
 const deleteTask = async (id) => TASKS.filter(async (task, idx) => {
-    console.log(task.id, id)
     if (task.id === id) {
         // console.log('deleted', task.boardId);
         // console.log('task id', task.id);
@@ -28,4 +35,4 @@ const deleteTask = async (id) => TASKS.filter(async (task, idx) => {
     }
 });
 
-module.exports = {getAll, getById, addTask, updateTask, deleteTask};
+module.exports = {getAll, getById, addTask, updateTask, deleteTask, unassignUser};
