@@ -6,7 +6,6 @@ const uuid = require('uuid').v4;
 router.route('/').get(async (req, res) => {
     const boards = await boardsService.getAll();
     // map board fields to exclude secret fields like "password"\
-    const board = new Board();
     res.json(boards.map(Board.toResponse));
 });
 
@@ -46,6 +45,7 @@ router.route('/:id').delete(async (req, res) => {
     const {id} = req.params;
     const board = await boardsService.getById(id);
     if (board) {
+        // console.log('to be deleted', board.id);
         await boardsService.deleteBoard(board.id);
         return res.status(204).json();
     }

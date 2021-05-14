@@ -6,7 +6,7 @@ class Task {
     title = 'Task title',
     order = 1,
     description = 'Description',
-    userId = '1', //assignee
+    userId = '1', // assignee
     boardId = '1',
     columnId = '1'
   } = {}) {
@@ -21,7 +21,7 @@ class Task {
 
   static toResponse(task) {
     const { id, title, order, description, userId ,boardId, columnId } = task;
-    return { id, title, order, description };
+    return { id, title, order, description, userId ,boardId, columnId };
   }
 }
 

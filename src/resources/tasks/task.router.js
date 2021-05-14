@@ -4,16 +4,23 @@ const tasksService = require('./task.service');
 const uuid = require('uuid').v4;
 
 router.route('/').get(async (req, res) => {
-    const tasks = await tasksService.getAll();
-    // map task fields to exclude secret fields like "password"\
-    const task = new Task();
-    res.json(tasks.map(Task.toResponse));
+    try {
+        const {boardIdParams} = req.params;
+        const tasks = await tasksService.getAll(boardIdParams);
+        // map task fields to exclude secret fields like "password"\
+        if (tasks) {
+            return res.json(tasks.map(Task.toResponse));
+        }
+        return res.status(404).send('404 Not found');
+    } catch (err) {
+        return res.status(404).send(err.message);
+    }
+
 });
 
 router.route('/:id').get(async (req, res) => {
     const {id} = req.params;
     const task = await tasksService.getById(id);
-    // map task fields to exclude secret fields like "password"
     if (task) {
         return res.json(Task.toResponse(task));
     }
@@ -21,6 +28,7 @@ router.route('/:id').get(async (req, res) => {
 });
 
 router.route('/').post(async (req, res) => {
+    const {boardIdParams} = req.params;
     const {title, order, description, userId ,boardId, columnId} = req.body
     const taskObj = {
         "id": uuid(),
@@ -28,7 +36,7 @@ router.route('/').post(async (req, res) => {
         "order": order,
         "description": description,
         "userId": userId,
-        "boardId": boardId,
+        "boardId": boardId || boardIdParams,
         "columnId": columnId
     };
     await tasksService.addTask(taskObj);

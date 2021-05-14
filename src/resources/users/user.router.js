@@ -4,10 +4,13 @@ const usersService = require('./user.service');
 const uuid = require('uuid').v4;
 
 router.route('/').get(async (req, res) => {
-    const users = await usersService.getAll();
-    // map user fields to exclude secret fields like "password"\
-    const user = new User();
-    res.json(users.map(User.toResponse));
+    try {
+        const users = await usersService.getAll();
+        res.json(users.map(User.toResponse));
+    } catch (err) {
+        return res.status(404).send(err.message);
+    }
+
 });
 
 router.route('/:id').get(async (req, res) => {
