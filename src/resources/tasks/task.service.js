@@ -8,10 +8,8 @@ const deleteTask = (id) => tasksRepo.deleteTask(id);
 const deleteTasksByBoardId = async (boardId) => {
     const tasks = await tasksRepo.getAll();
     if (tasks) {
-        // console.log('attempted to delete', boardId);
          await tasks.filter(async (task) => {
             if (task.boardId === boardId) {
-                // console.log('want to delete task id', task.id, 'with board id', task.boardId);
                 await tasksRepo.deleteTask(task.id);
             }
         });

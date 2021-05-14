@@ -5,7 +5,6 @@ const tasksService = require('./task.service');
 
 router.route('/').get(async (req, res) => {
     try {
-        // const {boardIdParams} = req.params;
         const tasks = await tasksService.getAll();
         // map task fields to exclude secret fields like "password"\
         if (tasks) {
@@ -15,7 +14,6 @@ router.route('/').get(async (req, res) => {
     } catch (err) {
         return res.status(404).send(err.message);
     }
-
 });
 
 router.route('/:id').get(async (req, res) => {

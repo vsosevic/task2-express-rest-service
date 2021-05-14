@@ -10,7 +10,6 @@ router.route('/').get(async (req, res) => {
     } catch (err) {
         return res.status(404).send(err.message);
     }
-
 });
 
 router.route('/:id').get(async (req, res) => {
