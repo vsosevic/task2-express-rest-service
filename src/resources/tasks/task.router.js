@@ -6,7 +6,6 @@ const tasksService = require('./task.service');
 router.route('/').get(async (req, res) => {
     try {
         const tasks = await tasksService.getAll();
-        // map task fields to exclude secret fields like "password"\
         if (tasks) {
             return res.json(tasks.map(Task.toResponse));
         }

@@ -15,7 +15,6 @@ router.route('/').get(async (req, res) => {
 router.route('/:id').get(async (req, res) => {
     const {id} = req.params;
     const user = await usersService.getById(id);
-    // map user fields to exclude secret fields like "password"
     if (user) {
         return res.json(User.toResponse(user));
     }

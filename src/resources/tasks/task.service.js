@@ -8,10 +8,12 @@ const deleteTask = (id) => tasksRepo.deleteTask(id);
 const deleteTasksByBoardId = async (boardId) => {
     const tasks = await tasksRepo.getAll();
     if (tasks) {
-         await tasks.filter(async (task) => {
+        tasks.map((task) => {
             if (task.boardId === boardId) {
-                await tasksRepo.deleteTask(task.id);
+                tasksRepo.deleteTask(task.id);
+                return true;
             }
+            return false;
         });
     }
 }
