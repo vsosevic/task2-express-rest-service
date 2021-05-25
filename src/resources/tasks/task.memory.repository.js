@@ -2,14 +2,19 @@ let TASKS = [];
 
 const getAll = async () => TASKS;
 const getById = async (id) => TASKS.find(task => task.id === id);
-const addTask = async (task) => TASKS.push(task);
+const addTask = async (task) => {
+    TASKS.push(task);
+    return task;
+};
 const updateTask = async (id, task) => {
     const foundIndex = TASKS.findIndex(x => x.id === id);
-    if (foundIndex) {
+    if (foundIndex >= 0) {
         const taskTmp = task;
         taskTmp.id = id;
         TASKS[foundIndex] = taskTmp;
+        return taskTmp;
     }
+    return false;
 };
 const unassignUser = async (userId) => TASKS.filter(task => {
     if (task.userId === userId) {
