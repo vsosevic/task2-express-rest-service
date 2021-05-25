@@ -1,6 +1,5 @@
 const router = require('express').Router({mergeParams: true});
 const {ReasonPhrases, StatusCodes} = require('http-status-codes');
-const uuid = require('uuid').v4;
 const Task = require('./task.model');
 const tasksService = require('./task.service');
 
@@ -34,7 +33,6 @@ router.route('/').post(async (req, res) => {
         const {boardId} = req.params;
         const {title, order, description, userId, columnId} = req.body
         const taskObj = {
-            "id": uuid(),
             "title": title,
             "order": order,
             "description": description,

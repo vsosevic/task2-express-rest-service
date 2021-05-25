@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const uuid = require('uuid').v4;
 const {ReasonPhrases, StatusCodes} = require('http-status-codes');
 const Board = require('./board.model');
 const boardsService = require('./board.service');
