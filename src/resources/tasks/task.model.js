@@ -1,14 +1,27 @@
 const uuid = require('uuid').v4;
 
+/**
+ * Task class.
+ */
 class Task {
+  /**
+   * Task constructor.
+   * @param {string} id - instance id.
+   * @param {string} title - task title.
+   * @param {number} order - task order.
+   * @param {string} description - task description.
+   * @param {string} userId - task owner's user id.
+   * @param {string} boardId - task's board id.
+   * @param {string} columnId - tasks's column id.
+   */
   constructor({
     id = uuid(),
     title = 'Task title',
     order = 1,
     description = 'Description',
-    userId = '1', // assignee
-    boardId = '1',
-    columnId = '1'
+    userId = '', // assignee
+    boardId = '',
+    columnId = ''
   } = {}) {
     this.id = id;
     this.title = title;
@@ -19,6 +32,12 @@ class Task {
     this.columnId = columnId;
   }
 
+  /**
+   * Takes a Task object and returns only needed fields.
+   * @param {Object} task - task instance.
+   * @returns {{id, title, order, description, userId ,boardId, columnId}}
+   * @static
+   */
   static toResponse(task) {
     const { id, title, order, description, userId ,boardId, columnId } = task;
     return { id, title, order, description, userId ,boardId, columnId };
