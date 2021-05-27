@@ -9,7 +9,7 @@ const getAll = async () => USERS;
 /**
  * Get User by Id.
  * @async
- * @param {number} id - user id.
+ * @param {string} id - user id.
  * @returns {Promise<Object>} User object.
  */
 const getById = async (id) => USERS.find(user => user.id === id);
@@ -45,7 +45,7 @@ const updateUser = async (id, user) => {
 /**
  * Delete a User by a given id.
  * @async
- * @param {number} id - User id.
+ * @param {string} id - User id.
  */
 const deleteUser = async (id) => USERS.map((user, idx) => {
   if (user.id === id) {
