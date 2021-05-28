@@ -20,11 +20,9 @@ router.route('/').get(async (_req: Request, res: Response) => {
 router.route('/:id').get(async (req: Request, res: Response) => {
     try {
         const {id} = req.params;
-        if (id && typeof id === 'string') {
-            const task = await tasksService.getById(id);
-            if (task) {
-                return res.json(Task.toResponse(task));
-            }
+        const task = await tasksService.getById(String(id));
+        if (task) {
+            return res.json(Task.toResponse(task));
         }
         return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND);
     } catch (err) {
@@ -47,11 +45,9 @@ router.route('/').post(async (req: Request, res: Response) => {
 router.route('/:id').put(async (req: Request, res: Response) => {
     try {
         const {id} = req.params;
-        if (id && typeof id === 'string') {
-            const task = await tasksService.updateTask(id, req.body);
-            if (task) {
-                return res.status(StatusCodes.OK).json(Task.toResponse(task));
-            }
+        const task = await tasksService.updateTask(String(id), req.body);
+        if (task) {
+            return res.status(StatusCodes.OK).json(Task.toResponse(task));
         }
         return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND);
     } catch (err) {
@@ -62,12 +58,10 @@ router.route('/:id').put(async (req: Request, res: Response) => {
 router.route('/:id').delete(async (req: Request, res: Response) => {
     try {
         const {id} = req.params;
-        if (id && typeof id === 'string') {
-            const task = await tasksService.getById(id);
-            if (task) {
-                await tasksService.deleteTask(task.id);
-                return res.status(StatusCodes.NO_CONTENT).json();
-            }
+        const task = await tasksService.getById(String(id));
+        if (task) {
+            await tasksService.deleteTask(task.id);
+            return res.status(StatusCodes.NO_CONTENT).json();
         }
         return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND);
     } catch (err) {
@@ -75,4 +69,4 @@ router.route('/:id').delete(async (req: Request, res: Response) => {
     }
 });
 
-export { router };
+export {router};

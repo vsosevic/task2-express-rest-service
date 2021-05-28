@@ -17,11 +17,9 @@ router.route('/').get(async (_req: Request, res: Response) => {
 router.route('/:id').get(async (req: Request, res: Response) => {
     try {
         const {id} = req.params;
-        if (id && typeof id === 'string') {
-            const board = await boardsService.getById(id);
-            if (board) {
-                return res.status(StatusCodes.OK).json(Board.toResponse(board));
-            }
+        const board = await boardsService.getById(String(id));
+        if (board) {
+            return res.status(StatusCodes.OK).json(Board.toResponse(board));
         }
         return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND);
     } catch (err) {
@@ -41,11 +39,9 @@ router.route('/').post(async (req: Request, res: Response) => {
 router.route('/:id').put(async (req: Request, res: Response) => {
     try {
         const {id} = req.params;
-        if (id && typeof id === 'string') {
-            const board = await boardsService.updateBoard(id, req.body);
-            if (board) {
-                return res.status(200).json(Board.toResponse(board));
-            }
+        const board = await boardsService.updateBoard(String(id), req.body);
+        if (board) {
+            return res.status(200).json(Board.toResponse(board));
         }
         return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND);
     } catch (err) {
@@ -56,12 +52,10 @@ router.route('/:id').put(async (req: Request, res: Response) => {
 router.route('/:id').delete(async (req: Request, res: Response) => {
     try {
         const {id} = req.params;
-        if (id && typeof id === 'string') {
-            const board = await boardsService.getById(id);
-            if (board) {
-                await boardsService.deleteBoard(board.id);
-                return res.status(StatusCodes.NO_CONTENT).json();
-            }
+        const board = await boardsService.getById(String(id));
+        if (board) {
+            await boardsService.deleteBoard(board.id);
+            return res.status(StatusCodes.NO_CONTENT).json();
         }
         return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND);
     } catch (err) {
@@ -69,4 +63,4 @@ router.route('/:id').delete(async (req: Request, res: Response) => {
     }
 });
 
-export { router };
+export {router};
