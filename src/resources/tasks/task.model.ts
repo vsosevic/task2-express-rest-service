@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 
 interface ITask {
-  id: string,
+  id?: string,
   title: string,
   order: number,
   description: string,
@@ -45,8 +45,8 @@ class Task implements ITask {
     description = 'Description',
     boardId = '',
     columnId = '',
-    userId = '' // assignee
-              } = {}) {
+    userId = null // assignee
+              } = {} as ITask) {
     this.id = id;
     this.title = title;
     this.order = order;

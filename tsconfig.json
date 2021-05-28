@@ -19,7 +19,6 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
-    "strictNullChecks": false,
     "forceConsistentCasingInFileNames": true
   },
   "exclude": [

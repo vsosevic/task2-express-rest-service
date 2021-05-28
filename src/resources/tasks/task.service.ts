@@ -47,7 +47,7 @@ const deleteTasksByBoardId = async (boardId: string) => {
     if (tasks) {
         tasks.map((task) => {
             if (task.boardId === boardId) {
-                tasksRepo.deleteTask(task.id);
+                tasksRepo.deleteTask(String(task.id));
                 return true;
             }
             return false;

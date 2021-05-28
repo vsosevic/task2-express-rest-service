@@ -32,9 +32,10 @@ router.route('/:id').get(async (req: Request, res: Response) => {
 
 router.route('/').post(async (req: Request, res: Response) => {
     try {
-        const {boardId} = req.params;
+        let {boardId} = req.params;
+        boardId = String(boardId);
         const {title, order, description, userId, columnId} = req.body
-        const taskObj = new Task({title, order, description, userId, columnId, boardId});
+        const taskObj = new Task({title, order, description, boardId, columnId, userId});
         const task = await tasksService.addTask(taskObj);
         return res.status(StatusCodes.CREATED).json(Task.toResponse(task));
     } catch (err) {
@@ -60,7 +61,7 @@ router.route('/:id').delete(async (req: Request, res: Response) => {
         const {id} = req.params;
         const task = await tasksService.getById(String(id));
         if (task) {
-            await tasksService.deleteTask(task.id);
+            await tasksService.deleteTask(String(task.id));
             return res.status(StatusCodes.NO_CONTENT).json();
         }
         return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND);
