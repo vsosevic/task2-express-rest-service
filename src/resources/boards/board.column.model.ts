@@ -1,9 +1,21 @@
-const uuid = require('uuid').v4;
+import { v4 as uuid } from 'uuid';
+
+interface IColumn {
+  id: string,
+  title: string,
+  order: number
+}
 
 /**
  * Column class.
  */
-class Column {
+class Column implements IColumn {
+  id: string;
+
+  order: number;
+
+  title: string;
+
   /**
    * Column constructor.
    * @param {string} id - instance id.
@@ -15,6 +27,7 @@ class Column {
     this.title = title;
     this.order = order;
   }
+
 }
 
-module.exports = Column;
+export { Column, IColumn};

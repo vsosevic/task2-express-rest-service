@@ -1,6 +1,6 @@
-const usersRepo = require('./user.memory.repository');
-const tasksService = require('../tasks/task.service');
-const User = require('./user.model');
+import * as usersRepo from './user.memory.repository';
+import { User, IUser } from './user.model';
+import * as tasksService from '../tasks/task.service';
 
 /**
  * Return all users.
@@ -13,14 +13,14 @@ const getAll = () => usersRepo.getAll();
  * @param {string} id - user id.
  * @returns {Promise<Object>} User object.
  */
-const getById = (id) => usersRepo.getById(id);
+const getById = (id: string) => usersRepo.getById(id);
 
 /**
  * Add a User to memory repository.
- * @param {Object} data - all the needed params to create a User.
+ * @param {IUser} data - object complies with IUser interface.
  * @returns {Promise<Object>} User object.
  */
-const addUser = (data) => {
+const addUser = (data: IUser) => {
     const user = new User({...data});
     return usersRepo.addUser(user);
 }
@@ -28,10 +28,10 @@ const addUser = (data) => {
 /**
  * Update a User by a given id with a given data.
  * @param {string} id - User id.
- * @param {Object} data - all the needed params to update a User.
+ * @param {IUser} data - object complies with IUser interface.
  * @returns {Promise<Object|boolean>} User object or false in case of id absence.
  */
-const updateUser = (id, data) => {
+const updateUser = (id: string, data: IUser) => {
     const user = new User({...data});
     return usersRepo.updateUser(id, user);
 };
@@ -40,10 +40,10 @@ const updateUser = (id, data) => {
  * Delete a user by a given id.
  * @param {string} id - User id.
  */
-const deleteUser = (id) => {
+const deleteUser = (id:string) => {
     usersRepo.deleteUser(id).then(() => {
         tasksService.unassignUser(id);
     });
 };
 
-module.exports = {getAll, getById, addUser, updateUser, deleteUser};
+export {getAll, getById, addUser, updateUser, deleteUser};

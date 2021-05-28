@@ -1,14 +1,14 @@
 import {ReasonPhrases, StatusCodes} from 'http-status-codes';
 import express, {Request, Response} from 'express';
-import * as usersService from './user.service';
-import { User } from "./user.model";
+import { Board } from "./board.model";
+import * as boardsService from './board.service'
 
 const router = express.Router();
 
 router.route('/').get(async (_req: Request, res: Response) => {
     try {
-        const users = await usersService.getAll();
-        return res.status(StatusCodes.OK).json(users.map(User.toResponse));
+        const boards = await boardsService.getAll();
+        return res.json(boards.map(Board.toResponse));
     } catch (err) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err.message);
     }
@@ -18,9 +18,9 @@ router.route('/:id').get(async (req: Request, res: Response) => {
     try {
         const {id} = req.params;
         if (id && typeof id === 'string') {
-            const user = await usersService.getById(id);
-            if (user) {
-                return res.status(StatusCodes.OK).json(User.toResponse(user));
+            const board = await boardsService.getById(id);
+            if (board) {
+                return res.status(StatusCodes.OK).json(Board.toResponse(board));
             }
         }
         return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND);
@@ -31,8 +31,8 @@ router.route('/:id').get(async (req: Request, res: Response) => {
 
 router.route('/').post(async (req: Request, res: Response) => {
     try {
-        const user = await usersService.addUser(req.body);
-        return res.status(StatusCodes.CREATED).json(User.toResponse(user));
+        const board = await boardsService.addBoard(req.body);
+        return res.status(StatusCodes.CREATED).json(Board.toResponse(board));
     } catch (err) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err.message);
     }
@@ -42,9 +42,9 @@ router.route('/:id').put(async (req: Request, res: Response) => {
     try {
         const {id} = req.params;
         if (id && typeof id === 'string') {
-            const user = await usersService.updateUser(id, req.body);
-            if (user) {
-                return res.status(StatusCodes.OK).json(User.toResponse(user));
+            const board = await boardsService.updateBoard(id, req.body);
+            if (board) {
+                return res.status(200).json(Board.toResponse(board));
             }
         }
         return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND);
@@ -57,9 +57,9 @@ router.route('/:id').delete(async (req: Request, res: Response) => {
     try {
         const {id} = req.params;
         if (id && typeof id === 'string') {
-            const user = await usersService.getById(id);
-            if (user) {
-                await usersService.deleteUser(user.id);
+            const board = await boardsService.getById(id);
+            if (board) {
+                await boardsService.deleteBoard(board.id);
                 return res.status(StatusCodes.NO_CONTENT).json();
             }
         }

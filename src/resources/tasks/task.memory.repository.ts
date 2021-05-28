@@ -1,4 +1,6 @@
-let TASKS = [];
+import { ITask }  from "./task.model";
+
+let TASKS: ITask[] = [];
 
 /**
  * Return all tasks.
@@ -13,15 +15,15 @@ const getAll = async () => TASKS;
  * @param {string} id - task id.
  * @returns {Promise<Object>} Task object.
  */
-const getById = async (id) => TASKS.find(task => task.id === id);
+const getById = async (id: string) => TASKS.find(task => task.id === id);
 
 /**
  * Add a Task to memory repository.
  * @async
- * @param {Object} task - instance of a Task class.
+ * @param {ITask} task - instance of a Task class.
  * @returns {Promise<Object>} Task object.
  */
-const addTask = async (task) => {
+const addTask = async (task: ITask) => {
     TASKS.push(task);
     return task;
 };
@@ -30,10 +32,10 @@ const addTask = async (task) => {
  * Update a Task by a given id with a given data.
  * @async
  * @param {string} id - Task id.
- * @param {Object} task - instance of a Task class.
+ * @param {ITask} task - instance of a Task class.
  * @returns {Promise<Object|boolean>} Task object or false in case of id absence.
  */
-const updateTask = async (id, task) => {
+const updateTask = async (id: string, task: ITask) => {
     const foundIndex = TASKS.findIndex(x => x.id === id);
     if (foundIndex >= 0) {
         const taskTmp = task;
@@ -49,7 +51,7 @@ const updateTask = async (id, task) => {
  * @async
  * @param {string} id - Task id.
  */
-const deleteTask = async (id) => {
+const deleteTask = async (id: string) => {
     TASKS = TASKS.filter(task => task.id !== id)
 };
 
@@ -59,7 +61,7 @@ const deleteTask = async (id) => {
  * @param {string} userId
  * @returns {Promise<boolean>} True if unassigned, false otherwise.
  */
-const unassignUser = async (userId) => TASKS.filter(task => {
+const unassignUser = async (userId: string) => TASKS.filter(task => {
     if (task.userId === userId) {
         const taskTmp = task;
         taskTmp.userId = null;
@@ -68,4 +70,4 @@ const unassignUser = async (userId) => TASKS.filter(task => {
     return false;
 });
 
-module.exports = {getAll, getById, addTask, updateTask, deleteTask, unassignUser};
+export { getAll, getById, addTask, updateTask, deleteTask, unassignUser };

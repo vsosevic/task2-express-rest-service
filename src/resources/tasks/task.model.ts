@@ -1,28 +1,52 @@
-const uuid = require('uuid').v4;
+import { v4 as uuid } from 'uuid';
+
+interface ITask {
+  id: string,
+  title: string,
+  order: number,
+  description: string,
+  boardId: string,
+  columnId: string,
+  userId: string|null,
+}
 
 /**
  * Task class.
  */
-class Task {
+class Task implements ITask {
+  id: string;
+
+  title: string;
+
+  order: number;
+
+  description: string;
+
+  boardId: string;
+
+  columnId: string;
+
+  userId: string|null;
+
   /**
    * Task constructor.
    * @param {string} id - instance id.
    * @param {string} title - task title.
    * @param {number} order - task order.
    * @param {string} description - task description.
-   * @param {string} userId - task owner's user id.
    * @param {string} boardId - task's board id.
    * @param {string} columnId - tasks's column id.
+   * @param {string} userId - task owner's user id.
    */
   constructor({
     id = uuid(),
     title = 'Task title',
     order = 1,
     description = 'Description',
-    userId = '', // assignee
     boardId = '',
-    columnId = ''
-  } = {}) {
+    columnId = '',
+    userId = '' // assignee
+              } = {}) {
     this.id = id;
     this.title = title;
     this.order = order;
@@ -38,10 +62,10 @@ class Task {
    * @returns {{id, title, order, description, userId ,boardId, columnId}}
    * @static
    */
-  static toResponse(task) {
+  static toResponse(task: ITask) {
     const { id, title, order, description, userId ,boardId, columnId } = task;
     return { id, title, order, description, userId ,boardId, columnId };
   }
 }
 
-module.exports = Task;
+export { Task, ITask };

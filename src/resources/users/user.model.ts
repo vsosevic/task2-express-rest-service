@@ -1,9 +1,24 @@
-const uuid = require('uuid').v4;
+import { v4 as uuid } from 'uuid';
+
+interface IUser {
+  id: string,
+  name: string,
+  login: string,
+  password: string
+}
 
 /**
  * User class.
  */
-class User {
+class User implements IUser{
+  id: string;
+
+  login: string;
+
+  name: string;
+
+  password: string;
+
   /**
    * User constructor.
    * @param {string} id - instance id.
@@ -29,10 +44,10 @@ class User {
    * @returns {{name, id, login}}
    * @static
    */
-  static toResponse(user) {
+  static toResponse(user: IUser) {
     const { id, name, login } = user;
     return { id, name, login };
   }
 }
 
-module.exports = User;
+export { User, IUser};

@@ -1,4 +1,7 @@
-const USERS = [];
+import { IUser } from "./user.model";
+
+const USERS: IUser[] = [];
+
 /**
  * Returns all Users.
  * @async
@@ -12,14 +15,14 @@ const getAll = async () => USERS;
  * @param {string} id - user id.
  * @returns {Promise<Object>} User object.
  */
-const getById = async (id) => USERS.find(user => user.id === id);
+const getById = async (id: string) => USERS.find(user => user.id === id);
 
 /**
  * Add a User to memory repository.
- * @param {Object} user - instance of a User class.
+ * @param {IUser} user - instance of a User class.
  * @returns {Promise<Object>} User object.
  */
-const addUser = async (user) => {
+const addUser = async (user: IUser) => {
   USERS.push(user);
   return user;
 };
@@ -28,10 +31,10 @@ const addUser = async (user) => {
  * Update a User by a given id with a given data.
  * @async
  * @param {string} id - User id.
- * @param {Object} user - all the needed params to update a User.
+ * @param {IUser} user - object complies with IUser interface.
  * @returns {Promise<Object|boolean>} User object or false in case of id absence.
  */
-const updateUser = async (id, user) => {
+const updateUser = async (id: string, user: IUser) => {
   const foundIndex = USERS.findIndex(x => x.id === id);
   if (foundIndex >= 0) {
     const userTmp = user;
@@ -47,7 +50,7 @@ const updateUser = async (id, user) => {
  * @async
  * @param {string} id - User id.
  */
-const deleteUser = async (id) => USERS.map((user, idx) => {
+const deleteUser = async (id: string) => USERS.map((user, idx) => {
   if (user.id === id) {
     USERS.splice(idx, 1);
     return true;
@@ -55,4 +58,4 @@ const deleteUser = async (id) => USERS.map((user, idx) => {
   return false;
 });
 
-module.exports = { getAll, getById, addUser, updateUser, deleteUser };
+export { getAll, getById, addUser, updateUser, deleteUser };

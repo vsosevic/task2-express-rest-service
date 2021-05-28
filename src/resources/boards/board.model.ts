@@ -1,39 +1,52 @@
-const uuid = require('uuid').v4;
-const Column = require('./board.column.model');
+import { v4 as uuid } from 'uuid';
+import { Column, IColumn } from "./board.column.model";
+
+interface IBoard {
+  id: string,
+  title: string,
+  columns: Array<IColumn>
+}
 
 /**
  * Board class.
  */
-class Board {
+class Board implements IBoard{
+  id: string;
+
+  title: string;
+
+  columns: Array<IColumn>;
+
   /**
    * Board constructor.
    * @param {string} id - instance id.
    * @param {string} title - board title.
-   * @param {Array} columns - board column.
+   * @param {Array<IColumn>} columns - board columns.
    */
   constructor({
     id = uuid(),
-    title,
-    columns
+    title = '',
+    columns = new Array<IColumn>()
   } = {}) {
     this.id = id;
     this.title = title;
     this.columns = columns.map(
-        (item) =>
+        (item: IColumn) =>
             new Column({ id: item.id, title: item.title, order: item.order })
     );
   }
 
   /**
    * Takes a Board object and returns only needed fields.
-   * @param {Object} board
+   * @param {IBoard} board - Board instance.
    * @returns {{id, title, columns}}
    * @static
    */
-  static toResponse(board) {
+  static toResponse(board: IBoard) {
     const { id, title, columns } = board;
     return { id, title, columns };
   }
+
 }
 
-module.exports = Board;
+export { Board, IBoard};
