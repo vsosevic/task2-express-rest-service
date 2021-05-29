@@ -6,6 +6,10 @@
     "jest": true,
     "node": true
   },
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint/eslint-plugin"
+  ],
   "parserOptions": {
     "sourceType": "module",
     "project": "./tsconfig.json",
