@@ -1,9 +1,11 @@
-const router = require('express').Router();
-const {ReasonPhrases, StatusCodes} = require('http-status-codes');
-const User = require('./user.model');
-const usersService = require('./user.service');
+import {ReasonPhrases, StatusCodes} from 'http-status-codes';
+import express, {Request, Response} from 'express';
+import * as usersService from './user.service';
+import { User } from "./user.model";
 
-router.route('/').get(async (req, res) => {
+const router = express.Router();
+
+router.route('/').get(async (_req: Request, res: Response) => {
     try {
         const users = await usersService.getAll();
         return res.status(StatusCodes.OK).json(users.map(User.toResponse));
@@ -12,10 +14,10 @@ router.route('/').get(async (req, res) => {
     }
 });
 
-router.route('/:id').get(async (req, res) => {
+router.route('/:id').get(async (req: Request, res: Response) => {
     try {
         const {id} = req.params;
-        const user = await usersService.getById(id);
+        const user = await usersService.getById(String(id));
         if (user) {
             return res.status(StatusCodes.OK).json(User.toResponse(user));
         }
@@ -25,7 +27,7 @@ router.route('/:id').get(async (req, res) => {
     }
 });
 
-router.route('/').post(async (req, res) => {
+router.route('/').post(async (req: Request, res: Response) => {
     try {
         const user = await usersService.addUser(req.body);
         return res.status(StatusCodes.CREATED).json(User.toResponse(user));
@@ -34,20 +36,23 @@ router.route('/').post(async (req, res) => {
     }
 });
 
-router.route('/:id').put(async (req, res) => {
+router.route('/:id').put(async (req: Request, res: Response) => {
     try {
         const {id} = req.params;
-        const user = await usersService.updateUser(id, req.body);
-        return res.status(StatusCodes.OK).json(User.toResponse(user));
+        const user = await usersService.updateUser(String(id), req.body);
+        if (user) {
+            return res.status(StatusCodes.OK).json(User.toResponse(user));
+        }
+        return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND);
     } catch (err) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err.message);
     }
 });
 
-router.route('/:id').delete(async (req, res) => {
+router.route('/:id').delete(async (req: Request, res: Response) => {
     try {
         const {id} = req.params;
-        const user = await usersService.getById(id);
+        const user = await usersService.getById(String(id));
         if (user) {
             await usersService.deleteUser(user.id);
             return res.status(StatusCodes.NO_CONTENT).json();
@@ -58,4 +63,4 @@ router.route('/:id').delete(async (req, res) => {
     }
 });
 
-module.exports = router;
+export {router};
