@@ -38,6 +38,7 @@
     "dot-notation": [0],
     "node/no-missing-import": ["error", {
       "tryExtensions": [".js", ".json", ".ts"]
-    }]
+    }],
+    "no-unused-vars": ["error", { "argsIgnorePattern": "next" }]
   }
 }
