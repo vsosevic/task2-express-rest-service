@@ -3,6 +3,7 @@ import winston from 'winston';
 const logger = winston.createLogger({
     level: 'info',
     format: winston.format.json(),
+    exitOnError: true,
     transports: [
         //
         // - Write all logs with level `error` and below to `error.log`
@@ -13,9 +14,6 @@ const logger = winston.createLogger({
     ],
 });
 
-// logger.add(new winston.transports.Console({
-//     format: winston.format.simple(),
-// }));
 logger.add(new winston.transports.Console());
 
 export { logger };

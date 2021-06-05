@@ -1,5 +1,5 @@
-import { logger } from './logger';
 import { Request, Response, NextFunction } from 'express';
+import { logger } from './logger';
 
 function requestLogger(req: Request, res: Response, next:NextFunction) {
     const queryParams = JSON.stringify(req.query);
@@ -10,7 +10,7 @@ function requestLogger(req: Request, res: Response, next:NextFunction) {
         : '';
     next();
     res.on("finish", () => {
-        const statusCode = res.statusCode;
+        const { statusCode } = res;
             logger.info({
                 requestMethod,
                 url,
