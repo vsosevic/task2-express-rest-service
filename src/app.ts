@@ -7,6 +7,7 @@ import { router as boardRouter } from './resources/boards/board.router';
 import { router as taskRouter } from './resources/tasks/task.router';
 import { requestLogger } from "./middlewares/logger/requestLogger";
 import { logger } from "./middlewares/logger/logger";
+import errorHandler from "./middlewares/errorHandler";
 
 const app = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
@@ -28,6 +29,7 @@ app.use('/boards', boardRouter);
 app.use('/boards/:boardId/tasks', taskRouter);
 
 app.use(requestLogger);
+app.use(errorHandler);
 
 process.on('uncaughtException', async (err) => {
   logger.error(`uncaughtException - ${err.message}`);
@@ -43,6 +45,6 @@ process.on('unhandledRejection', (err) => {
 
 // Code for testing errors. Just uncomment appropriate line.
 // throw new Error('Oops!');
-// Promise.reject(Error('Oops!'))
+// Promise.reject(Error('Oops!'));
 
 export { app };

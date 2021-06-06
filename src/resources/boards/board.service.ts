@@ -1,6 +1,7 @@
 import * as boardsRepo from './board.memory.repository';
 import { Board, IBoard } from './board.model'
 import * as tasksService from '../tasks/task.service';
+import {logger} from "../../middlewares/logger/logger";
 
 /**
  * Return all boards.
@@ -44,7 +45,7 @@ const deleteBoard = async (id: string) => {
     await boardsRepo.deleteBoard(id).then(() => {
         tasksService.deleteTasksByBoardId(id);
     }).catch(err => {
-        console.error('Smth went wrong with board deletion', err);
+        logger.error(`Board deletion error: ${err}`);
     });
 
 };

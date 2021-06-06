@@ -8,13 +8,13 @@ const router = express.Router({mergeParams: true});
 router.route('/').get(async (_req: Request, res: Response, next: NextFunction) => {
     try {
         const tasks = await tasksService.getAll();
+        next();
         if (tasks) {
-            next();
             return res.status(StatusCodes.OK).json(tasks.map(Task.toResponse));
         }
         return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND);
     } catch (err) {
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err.message);
+        return next(err);
     }
 });
 
@@ -22,13 +22,13 @@ router.route('/:id').get(async (req: Request, res: Response, next: NextFunction)
     try {
         const {id} = req.params;
         const task = await tasksService.getById(String(id));
+        next();
         if (task) {
-            next();
             return res.json(Task.toResponse(task));
         }
         return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND);
     } catch (err) {
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err.message);
+        return next(err);
     }
 });
 
@@ -42,7 +42,7 @@ router.route('/').post(async (req: Request, res: Response, next: NextFunction) =
         next();
         return res.status(StatusCodes.CREATED).json(Task.toResponse(task));
     } catch (err) {
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err.message);
+        return next(err);
     }
 });
 
@@ -50,13 +50,13 @@ router.route('/:id').put(async (req: Request, res: Response, next: NextFunction)
     try {
         const {id} = req.params;
         const task = await tasksService.updateTask(String(id), req.body);
+        next();
         if (task) {
-            next();
             return res.status(StatusCodes.OK).json(Task.toResponse(task));
         }
         return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND);
     } catch (err) {
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err.message);
+        return next(err);
     }
 });
 
@@ -64,14 +64,14 @@ router.route('/:id').delete(async (req: Request, res: Response, next: NextFuncti
     try {
         const {id} = req.params;
         const task = await tasksService.getById(String(id));
+        next();
         if (task) {
             await tasksService.deleteTask(String(task.id));
-            next();
             return res.status(StatusCodes.NO_CONTENT).json();
         }
         return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND);
     } catch (err) {
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err.message);
+        return next(err);
     }
 });
 
