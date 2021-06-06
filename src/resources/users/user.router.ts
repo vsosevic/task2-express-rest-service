@@ -8,10 +8,9 @@ const router = express.Router();
 
 router.route('/').get(asyncHandler(async (_req: Request, res: Response, next: NextFunction) => {
     const users = await usersService.getAll();
-    // throw new Error("123");
+    // throw new Error("Oops!");
     next();
     return res.status(StatusCodes.OK).json(users.map(User.toResponse));
-    // return res.status(StatusCodes.OK).json(users);
 }));
 
 router.route('/:id').get(asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
