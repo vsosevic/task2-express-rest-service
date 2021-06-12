@@ -24,11 +24,12 @@ app.use('/', (req, res, next) => {
   next();
 });
 
+app.use(requestLogger);
+
 app.use('/users', userRouter);
 app.use('/boards', boardRouter);
 app.use('/boards/:boardId/tasks', taskRouter);
 
-app.use(requestLogger);
 app.use(errorHandler);
 
 process.on('uncaughtException', async (err) => {
