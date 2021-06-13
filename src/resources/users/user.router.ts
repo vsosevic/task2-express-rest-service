@@ -12,6 +12,11 @@ router.route('/').get(asyncHandler(async (_req: Request, res: Response) => {
     return res.status(StatusCodes.OK).json(users.map(User.toResponse));
 }));
 
+// For test purpose to check docker container restarting. Url to access this route is - /users/crash
+router.route('/crash').get(asyncHandler(async (_req: Request, _res: Response) => {
+    process.exit(1);
+}));
+
 router.route('/:id').get(asyncHandler(async (req: Request, res: Response) => {
     const {id} = req.params;
     const user = await usersService.getById(String(id));

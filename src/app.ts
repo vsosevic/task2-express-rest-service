@@ -34,6 +34,11 @@ app.use(errorHandler);
 
 process.on('uncaughtException', async (err) => {
   logger.error(`uncaughtException - ${err.message}`);
+  // There is no solution so far on how to handle logging to the file while using process.exit.
+  // That's why I use this dirty hack with setTimeout :).
+  setTimeout(() => {
+    process.exit(1);
+  }, 2000);
 });
 
 process.on('unhandledRejection', (err) => {
@@ -42,6 +47,9 @@ process.on('unhandledRejection', (err) => {
     errorMessage += err.toString();
   }
   logger.error(errorMessage);
+  setTimeout(() => {
+    process.exit(1);
+  }, 2000);
 });
 
 // Code for testing errors. Just uncomment appropriate line.
