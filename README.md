@@ -70,3 +70,20 @@ npm run lint
 Press <kbd>F5</kbd> to debug.
 
 For more information, visit: https://code.visualstudio.com/docs/editor/debugging
+
+### Start the app via Docker
+
+To start the up:
+
+    docker-compose up
+
+To check the files are being monitored by nodemon from container:
+
+    change any line in any file and see how nodemon is restarting
+
+To check the container is being restarted after app is crashed
+    
+    goto url /users/crash
+    witness that container was crashed
+    goto url /users
+    witness everything is working again (may take up to 30 secs)
