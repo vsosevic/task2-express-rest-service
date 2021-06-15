@@ -10,7 +10,8 @@ services:
     depends_on:
       - postgres
     environment:
-      - PORT=8080
+      - PORT=${PORT}
+      - POSTGRES_HOST=postgres
     networks:
       - vsosevich-net
     volumes:
@@ -28,10 +29,12 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      PGDATA: ${PGDATA}
     networks:
       - vsosevich-net
     volumes:
-      - ./database:/user/app/database
+      - ./database:/var/lib/postgresql/data
 
 networks:
   vsosevich-net:
