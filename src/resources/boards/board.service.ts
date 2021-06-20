@@ -1,4 +1,4 @@
-import * as boardsRepo from './board.memory.repository';
+import * as boardsRepo from './board.db';
 import { Board, IBoard } from './board.model'
 import * as tasksService from '../tasks/task.service';
 import {logger} from "../../middlewares/logger/logger";

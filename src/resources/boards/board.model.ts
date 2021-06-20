@@ -1,21 +1,27 @@
 import { v4 as uuid } from 'uuid';
-import { Column, IColumn } from "./board.column.model";
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+
 
 interface IBoard {
   id: string,
   title: string,
-  columns: Array<IColumn>
+  columns: string
 }
 
 /**
  * Board class.
  */
+@Entity()
 class Board implements IBoard{
+
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column()
   title: string;
 
-  columns: Array<IColumn>;
+  @Column({type: "json", nullable: true})
+  columns: string;
 
   /**
    * Board constructor.
@@ -26,14 +32,11 @@ class Board implements IBoard{
   constructor({
     id = uuid(),
     title = '',
-    columns = new Array<IColumn>()
+    columns = ''
   } = {}) {
     this.id = id;
     this.title = title;
-    this.columns = columns.map(
-        (item: IColumn) =>
-            new Column({ id: item.id, title: item.title, order: item.order })
-    );
+    this.columns = columns;
   }
 
   /**
