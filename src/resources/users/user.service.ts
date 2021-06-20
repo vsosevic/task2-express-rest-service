@@ -40,9 +40,9 @@ const updateUser = (id: string, data: IUser) => {
  * Delete a user by a given id.
  * @param {string} id - User id.
  */
-const deleteUser = (id: string) => {
-    usersRepo.deleteUser(id).then(() => {
-        tasksService.unassignUser(id);
+const deleteUser = async (id: string) => {
+    await usersRepo.deleteUser(id).then(async () => {
+        await tasksService.unassignUser(id);
     });
 };
 

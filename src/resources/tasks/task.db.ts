@@ -72,7 +72,7 @@ const unassignUser = async (userId: string) => {
     await taskRepository.createQueryBuilder()
         .update()
         .set({ userId: undefined })
-        .where("userId = :userId", {userId: userId})
+        .where("userId = :userId", {userId})
         .execute()
         .catch(() => {});
 

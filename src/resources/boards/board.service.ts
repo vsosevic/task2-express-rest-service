@@ -42,8 +42,8 @@ const updateBoard = (id: string, data: IBoard) => {
  * @param {string} id - Board id.
  */
 const deleteBoard = async (id: string) => {
-    await boardsRepo.deleteBoard(id).then(() => {
-        tasksService.deleteTasksByBoardId(id);
+    await boardsRepo.deleteBoard(id).then( async () => {
+        await tasksService.deleteTasksByBoardId(id);
     }).catch(err => {
         logger.error(`Board deletion error: ${err}`);
     });
