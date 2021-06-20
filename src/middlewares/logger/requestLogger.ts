@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { logger } from './logger';
 
-function requestLogger(req: Request, res: Response, next:NextFunction) {
+function requestLogger(req: Request, res: Response, next: NextFunction) {
     const queryParams = JSON.stringify(req.query);
     const url = req.hostname + req.originalUrl;
     const requestMethod = req.method;
@@ -10,14 +10,14 @@ function requestLogger(req: Request, res: Response, next:NextFunction) {
         : '';
     next();
     res.on("finish", () => {
-        const { statusCode } = res;
-            logger.info({
-                requestMethod,
-                url,
-                queryParams,
-                body,
-                statusCode
-            });
+        const {statusCode} = res;
+        logger.info({
+            requestMethod,
+            url,
+            queryParams,
+            body,
+            statusCode
+        });
     });
 }
 

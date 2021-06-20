@@ -1,4 +1,4 @@
-import {Request, Response, NextFunction} from "express";
+import { Request, Response, NextFunction } from "express";
 import { StatusCodes, ReasonPhrases } from "http-status-codes";
 import { logger } from "./logger/logger";
 
