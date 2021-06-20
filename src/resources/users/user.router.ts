@@ -13,13 +13,13 @@ router.route('/').get(asyncHandler(async (_req: Request, res: Response) => {
 }));
 
 // For test purpose to check docker container restarting. Url to access this route is - /users/crash
-router.route('/crash').get(asyncHandler(async (_req: Request, _res: Response) => {
-    process.exit(1);
-}));
+// router.route('/crash').get(asyncHandler(async (_req: Request, _res: Response) => {
+//     process.exit(1);
+// }));
 
 router.route('/:id').get(asyncHandler(async (req: Request, res: Response) => {
-    const {id} = req.params;
-    const user = await usersService.getById(String(id));
+    const { id } = <{ id: string }>req.params;
+    const user = await usersService.getById(id);
     if (user) {
         return res.status(StatusCodes.OK).json(User.toResponse(user));
     }
@@ -32,8 +32,8 @@ router.route('/').post(asyncHandler(async (req: Request, res: Response) => {
 }));
 
 router.route('/:id').put(asyncHandler(async (req: Request, res: Response) => {
-    const {id} = req.params;
-    const user = await usersService.updateUser(String(id), req.body);
+    const { id } = <{ id: string }>req.params;
+    const user = await usersService.updateUser(id, req.body);
     if (user) {
         return res.status(StatusCodes.OK).json(User.toResponse(user));
     }
@@ -41,10 +41,10 @@ router.route('/:id').put(asyncHandler(async (req: Request, res: Response) => {
 }));
 
 router.route('/:id').delete(asyncHandler(async (req: Request, res: Response) => {
-    const {id} = req.params;
-    const user = await usersService.getById(String(id));
-    if (user) {
-        usersService.deleteUser(user.id);
+    const { id } = <{ id: string }>req.params;
+    const user = await usersService.getById(id);
+    if (user?.id) {
+        await usersService.deleteUser(user.id);
         return res.status(StatusCodes.NO_CONTENT).json();
     }
     return res.status(StatusCodes.NOT_FOUND).send(ReasonPhrases.NOT_FOUND);
