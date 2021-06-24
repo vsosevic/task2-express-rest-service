@@ -12,6 +12,7 @@ services:
     environment:
       - PORT=${PORT}
       - POSTGRES_HOST=postgres
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
     networks:
       - vsosevich-net
     volumes:
