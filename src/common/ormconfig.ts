@@ -11,7 +11,7 @@ import {
 const config: ConnectionOptions = {
     type: 'postgres',
     host: POSTGRES_HOST || 'localhost',
-    port: POSTGRES_PORT ? parseInt(POSTGRES_PORT, 10): 5432,
+    port: POSTGRES_PORT ? +POSTGRES_PORT : 5432,
     username: POSTGRES_USER || 'postgres',
     password: POSTGRES_PASSWORD || 'postgres',
     database: POSTGRES_DB || 'postgres',
