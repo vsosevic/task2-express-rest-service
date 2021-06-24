@@ -15,7 +15,7 @@ loginRouter.route('/login').post(asyncHandler(async (req: Request, res: Response
         const jwtToken = jwt.sign(payload, String(JWT_SECRET_KEY));
         return res.status(StatusCodes.OK).json({token: jwtToken});
     }
-    return res.status(StatusCodes.UNAUTHORIZED).json(ReasonPhrases.UNAUTHORIZED);
+    return res.status(StatusCodes.FORBIDDEN).json(ReasonPhrases.FORBIDDEN);
 }));
 
 export { loginRouter };
