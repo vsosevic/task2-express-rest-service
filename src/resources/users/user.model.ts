@@ -1,5 +1,6 @@
 import { v4 as uuid } from 'uuid';
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert } from "typeorm";
+import bcrypt from 'bcrypt';
 
 interface IUser {
   id: string,
@@ -25,6 +26,11 @@ class User implements IUser{
 
   @Column()
   password: string;
+
+  @BeforeInsert()
+  async hashPassword() {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
 
   /**
    * User constructor.
