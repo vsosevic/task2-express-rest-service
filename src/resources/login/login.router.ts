@@ -1,8 +1,8 @@
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import express, { Request, Response } from 'express';
 import asyncHandler from "express-async-handler";
-import { JWT_SECRET_KEY } from '../../common/config';
 import jwt from 'jsonwebtoken';
+import { JWT_SECRET_KEY } from '../../common/config';
 import { authenticateUser } from "./login.service";
 
 const loginRouter = express.Router();

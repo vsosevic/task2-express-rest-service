@@ -1,7 +1,7 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { Request, Response, NextFunction } from 'express';
-import { JWT_SECRET_KEY } from '../common/config';
 import jwt from 'jsonwebtoken';
+import { JWT_SECRET_KEY } from '../common/config';
 
 function checkToken(req: Request, res: Response, next: NextFunction) {
     if (req.url === '/login' || req.url === '/doc' || req.url === '/') {
