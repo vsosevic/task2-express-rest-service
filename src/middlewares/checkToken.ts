@@ -4,8 +4,11 @@ import jwt from 'jsonwebtoken';
 import { JWT_SECRET_KEY } from '../common/config';
 
 function checkToken(req: Request, res: Response, next: NextFunction) {
-    if (req.url === '/login' || req.url === '/doc' || req.url === '/') {
-        return next();
+    switch (req.url) {
+        case '/':
+        case '/login':
+        case '/doc':
+            return next();
     }
     const authHeader = req.headers.authorization;
     if (authHeader !== undefined) {
