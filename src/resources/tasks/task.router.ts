@@ -32,8 +32,7 @@ router.route('/:id').get(async (req: Request, res: Response, next: NextFunction)
 
 router.route('/').post(async (req: Request, res: Response, next: NextFunction) => {
     try {
-        let {boardId} = req.params;
-        boardId = String(boardId);
+        const {boardId} = <{ boardId: string }>req.params;
         const {title, order, description, userId, columnId} = req.body
         const taskObj = new Task({title, order, description, boardId, columnId, userId});
         const task = await tasksService.addTask(taskObj);

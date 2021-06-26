@@ -9,13 +9,16 @@
   "description": "REST service starter for RS School",
   "main": "build/server.js",
   "scripts": {
-    "dev": "nodemon --legacy-watch --exitcrash",
+    "dev": "nodemon",
     "start": "ts-node build/server.js",
     "build": "tsc --noEmitOnError -p tsconfig.json",
-    "lint": "eslint --ext .js,.ts src/",
+    "lint": "eslint --ext .js,.ts src/ --fix",
     "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand",
     "test:auth": "cross-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace",
-    "doc": "jsdoc -c jsdoc.json"
+    "doc": "jsdoc -c jsdoc.json",
+    "migration-gen": "typeorm migration:generate -n Task",
+    "migration-run": "typeorm migration:run",
+    "typeorm": "ts-node ./node_modules/typeorm/cli.js --config=./src/common/ormconfig.ts"
   },
   "keywords": [
     "rs",
@@ -54,8 +57,11 @@
     "express-async-handler": "^1.1.4",
     "http-status-codes": "^2.1.4",
     "jsdoc": "^3.6.7",
+    "pg": "^8.6.0",
+    "reflect-metadata": "^0.1.13",
     "services": "^0.0.3",
     "swagger-ui-express": "4.1.6",
+    "typeorm": "^0.2.34",
     "uuid": "8.3.2",
     "winston": "^3.3.3",
     "yamljs": "0.3.0"

@@ -1,4 +1,4 @@
-import * as tasksRepo from './task.memory.repository';
+import * as tasksRepo from './task.db';
 import { Task, ITask } from './task.model';
 
 /**
@@ -45,9 +45,9 @@ const deleteTask = (id: string) => tasksRepo.deleteTask(id);
 const deleteTasksByBoardId = async (boardId: string) => {
     const tasks = await tasksRepo.getAll();
     if (tasks) {
-        tasks.map((task) => {
+        tasks.map( async (task) => {
             if (task.boardId === boardId) {
-                tasksRepo.deleteTask(String(task.id));
+                await tasksRepo.deleteTask(String(task.id));
                 return true;
             }
             return false;

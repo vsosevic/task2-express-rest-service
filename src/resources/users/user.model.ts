@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'uuid';
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 interface IUser {
   id: string,
@@ -10,13 +11,19 @@ interface IUser {
 /**
  * User class.
  */
+@Entity()
 class User implements IUser{
+
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column()
   login: string;
 
+  @Column()
   name: string;
 
+  @Column()
   password: string;
 
   /**

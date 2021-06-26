@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'uuid';
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 interface ITask {
   id?: string,
@@ -7,26 +8,35 @@ interface ITask {
   description: string,
   boardId: string,
   columnId: string,
-  userId: string|null,
+  userId: string,
 }
 
 /**
  * Task class.
  */
+@Entity()
 class Task implements ITask {
+
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column()
   title: string;
 
+  @Column()
   order: number;
 
+  @Column()
   description: string;
 
+  @Column()
   boardId: string;
 
+  @Column({nullable: true})
   columnId: string;
 
-  userId: string|null;
+  @Column({nullable: true})
+  userId: string;
 
   /**
    * Task constructor.
@@ -45,7 +55,7 @@ class Task implements ITask {
     description = 'Description',
     boardId = '',
     columnId = '',
-    userId = null // assignee
+    userId = '' // assignee
               } = {} as ITask) {
     this.id = id;
     this.title = title;
